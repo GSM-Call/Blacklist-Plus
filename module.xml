@@ -1,0 +1,46 @@
+<module>
+	<rawname>blacklist</rawname>
+	<name>Blacklist Plus</name>
+	<version>16.0.0.1</version>
+	<publisher>GSMcall Inc.</publisher>
+	<category>Admin</category>
+	<description>This module is used to manage a system wide list of blocked callers</description>
+	<menuitems>
+		<blacklist needsenginedb="yes">Blacklist Plus</blacklist>
+	</menuitems>
+	<changelog>
+		*16.0.0.1*  GSMcall - fixed: Preserving permission right of auxillary files used to send mail and added FPBX Chown capability.
+		*16.0.0.0*  Modified by GSMcall Inc for better functionality and alerting via emails.
+		*15.0.2.10* FREEI-890 Fix XSS Bootstrap Datatable Issues 
+		*15.0.2.9* Related to FREEPBX-20414: removed $jobid from runRestore() 
+		*15.0.2.8* FREEPBX-20389 Restoring backup into FreePBX 15 system is not flushing the previously existing blacklist entries. 
+		*15.0.2.7* fixing backup
+		*15.0.2.6* fixing legacy restore
+		*15.0.2.5* fixing legacy restore
+		*15.0.2.4* FREEPBX-18905 Blacklist not working
+		*15.0.2.3* FREEPBX-18905 Blacklist not working
+		*15.0.2.2* FREEPBX-18352 Hook namespace issue
+		*15.0.2* Packaging of ver 15.0.2
+		*15.0.1* Forked from 13.0.14.9 Implement Backup 15
+	</changelog>
+	<hooks>
+		<bulkhandler class="Bulkhandler" namespace="FreePBX\modules">
+			<method callingMethod="getHeaders" class="Blacklist" namespace="FreePBX\modules">bulkhandlerGetHeaders</method>
+			<method callingMethod="getTypes" class="Blacklist" namespace="FreePBX\modules">bulkhandlerGetTypes</method>
+			<method callingMethod="import" class="Blacklist" namespace="FreePBX\modules">bulkhandlerImport</method>
+			<method callingMethod="export" class="Blacklist" namespace="FreePBX\modules">bulkhandlerExport</method>
+		</bulkhandler>
+	</hooks>
+	<depends>
+		<module>core ge 2.5.1.2</module>
+		<module>framework ge 15.0.16.40</module>
+	</depends>
+	<supported>
+		<version>16.0</version>
+	</supported>
+	<hooks>
+		<framework namespace="FreePBX\Console\Command" class="Chown">
+			<method namespace="FreePBX\modules" class="Blacklist" callingMethod="fwcChownFiles">chownFreepbx</method>
+		</framework>
+	</hooks>
+</module>
